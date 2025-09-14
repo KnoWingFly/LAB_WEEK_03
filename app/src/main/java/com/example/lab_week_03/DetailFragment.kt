@@ -5,7 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.TextView
+import androidx.navigation.fragment.findNavController
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,6 +28,8 @@ class DetailFragment : Fragment() {
         get() = view?.findViewById(R.id.coffee_title)
     private val coffeeDesc: TextView?
         get() = view?.findViewById(R.id.coffee_desc)
+    private val backButton: ImageButton?
+        get() = view?.findViewById(R.id.back_button)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +38,7 @@ class DetailFragment : Fragment() {
             param2 = it.getString(ARG_PARAM2)
         }
     }
+
     fun setCoffeeData(id: Int) {
         when (id) {
             R.id.affogato -> {
@@ -50,6 +55,26 @@ class DetailFragment : Fragment() {
                 coffeeTitle?.text = getString(R.string.latte_title)
                 coffeeDesc?.text = getString(R.string.latte_desc)
             }
+
+            R.id.cappuccino -> {
+                coffeeTitle?.text = getString(R.string.cappuccino_title)
+                coffeeDesc?.text = getString(R.string.cappuccino_desc)
+            }
+
+            R.id.macchiato -> {
+                coffeeTitle?.text = getString(R.string.macchiato_title)
+                coffeeDesc?.text = getString(R.string.macchiato_desc)
+            }
+
+            R.id.mocha -> {
+                coffeeTitle?.text = getString(R.string.mocha_title)
+                coffeeDesc?.text = getString(R.string.mocha_desc)
+            }
+
+            R.id.espresso -> {
+                coffeeTitle?.text = getString(R.string.espresso_title)
+                coffeeDesc?.text = getString(R.string.espresso_desc)
+            }
         }
     }
 
@@ -58,10 +83,16 @@ class DetailFragment : Fragment() {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_detail, container, false)
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val coffeeId = arguments?.getInt(COFFEE_ID, 0) ?: 0
         setCoffeeData(coffeeId)
+
+        // Set up back button click listener
+        backButton?.setOnClickListener {
+            findNavController().navigateUp()
+        }
     }
 
     companion object {
